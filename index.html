@@ -98,4 +98,42 @@ L.forEach(function(it,ix){
 });
 var sp=document.getElementById('sp');
 for(var i=0;i<8;i++){var e=document.createElement('i');e.style.left=(Math.random()*100)+'%';e.style.animationDuration=(7+Math.random()*8)+'s';e.style.animationDelay=(Math.random()*8)+'s';sp.appendChild(e)}
-</script></body></html>
+</script>
+
+
+ 
+<script>
+(async function () {
+  const endpoint =
+    "https://website-counter.mohamedtamer1k.workers.dev/";
+
+  let visitorId = localStorage.getItem("site_visitor_id");
+
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem("site_visitor_id", visitorId);
+  }
+
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        visitorId: visitorId,
+        page: location.pathname
+      }),
+      keepalive: true
+    });
+
+    console.log("إحصائيات الموقع:", await response.json());
+  } catch (error) {
+    console.error("Stats Error:", error);
+  }
+})();
+</script>
+
+
+
+</body></html>
